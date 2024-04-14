@@ -13,8 +13,8 @@ namespace ProgPart1
         {
             bool close = false;
 
-            //ingredients.EnterIngredients();
-            //ingredinets.EnterSteps();
+            ingredients.EnterIngredients();
+            ingredients.EnterSteps();
 
             while (!close)
             {
@@ -39,18 +39,18 @@ namespace ProgPart1
                 switch (close) 
                 {
                     case a:
-                        recipe.displayrecipe();
+                        ingredients.displayrecipe();
                         break;
 
                     case b:
-                        recipe.scalerecipe;
+                        ingredients.scalerecipe;
                         break;
 
                     case c:
-                        recipe.resetrecipe;
+                        ingredients.resetrecipe;
                         break;
                     case c:
-                        recipe.deleterecipe;
+                        ingredients.deleterecipe;
                         break;
                     case d:
                         close = true;
