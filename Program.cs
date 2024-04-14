@@ -62,7 +62,10 @@ namespace ProgPart1
                 }
                 if (!close)
                 {
-
+                    Console.WriteLine("Would you like to continue? (yes/no): ");
+                    string continueclose =Console.ReadLine().ToLower();
+                    if (continueclose ! = "yes")
+                        close = true;
                 }
             }
         }
