@@ -10,6 +10,12 @@ namespace ProgPart1
     {
         static void Main(string[] args)
         {
+            bool close = false;
+
+            ingredients.EnterIngredients();
+            ingredinets.EnterSteps();
+
+            while(!close)
         }
     }
 }
