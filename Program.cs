@@ -5,6 +5,7 @@ using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace ProgPart1
 {
     internal class Program
@@ -12,59 +13,55 @@ namespace ProgPart1
         static void Main(string[] args)
         {
             bool close = false;
-
-            ingredients.EnterIngredients();
-            ingredients.EnterSteps();
+            Recipe recipe = new Recipe(); // Corrected class name to Recipe
+            recipe.EnterIngredients();
+            recipe.EnterSteps();
 
             while (!close)
             {
-                Console.WriteLine("Welcome to our app enter your....");
-
+                Console.WriteLine("Welcome to our app. Enter your choice:");
 
                 Console.WriteLine("\nOptions");
                 Console.WriteLine("a. View Recipe");
                 Console.WriteLine("b. Scale Recipe");
-                Console.WriteLine("b. Reset Recipe");
-                Console.WriteLine("c. Delete Recipe");
-                Console.WriteLine("d. Close Application");
+                Console.WriteLine("c. Reset Recipe");
+                Console.WriteLine("d. Delete Recipe");
+                Console.WriteLine("e. Close Application");
 
-               
-                string choices;
-                if (!string.IsNullOrEmpty(Console.ReadLine()))
+                string choice = Console.ReadLine().ToLower(); // Corrected variable name and made it lowercase
+
+                switch (choice) // Corrected variable name and made it lowercase
                 {
-                    | Console.WriteLine("Invalid opotion, enter a a,b,c or d");
-                    continue;
-                }
-
-                switch (close) 
-                {
-                    case a:
-                        ingredients.displayrecipe();
+                    case "a": // Corrected case labels to strings
+                        recipe.DisplayRecipe(); // Corrected method name to DisplayRecipe
                         break;
 
-                    case b:
-                        ingredients.scalerecipe;
+                    case "b":
+                        recipe.ScaleRecipe(); // Assuming you will implement this method in Recipe class
                         break;
 
-                    case c:
-                        ingredients.resetrecipe;
+                    case "c":
+                        recipe.ResetRecipe(); // Assuming you will implement this method in Recipe class
                         break;
-                    case c:
-                        ingredients.deleterecipe;
+
+                    case "d":
+                        recipe.DeleteRecipe(); // Assuming you will implement this method in Recipe class
                         break;
-                    case d:
+
+                    case "e":
                         close = true;
                         break;
-                        default:
+
+                    default:
                         Console.WriteLine("Invalid selection");
                         continue;
-                        
                 }
+
                 if (!close)
                 {
                     Console.WriteLine("Would you like to continue? (yes/no): ");
-                    string continueclose =Console.ReadLine().ToLower();
-                    if (continueclose ! = "yes")
+                    string continueClose = Console.ReadLine().ToLower(); // Corrected variable name and made it lowercase
+                    if (continueClose != "yes")
                         close = true;
                 }
             }

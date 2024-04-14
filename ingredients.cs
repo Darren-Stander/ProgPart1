@@ -1,26 +1,110 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ProgPart1
 {
-    internal class ingredients
+    internal class Ingredient // Changed class name to singular and corrected casing
     {
-        private List<Ingredient> ingredients;
+        public string Name { get; set; }
+        public double Quantity { get; set; }
+        public string Unit { get; set; }
+
+        public Ingredient(string name, double quantity, string unit) // Constructor
+        {
+            Name = name;
+            Quantity = quantity;
+            Unit = unit;
+        }
+    }
+
+    internal class Recipe
+    {
+        private List<Ingredient> ingredients; // Corrected type and naming
         private List<string> steps;
         private bool isScaled;
         private double scaleFactor;
 
-        public ingredients()
+        public Recipe()
         {
-            ingredients = new List<Ingredient>();
+            ingredients = new List<Ingredient>(); // Corrected naming
             steps = new List<string>();
             isScaled = false;
             scaleFactor = 1.0;
         }
 
+        public void EnterIngredients()
+        {
+            int numIngredients;
+            while (true)
+            {
+                Console.Write("Enter the number of ingredients: ");
+                if (int.TryParse(Console.ReadLine(), out numIngredients) && numIngredients > 0)
+                    break;
+                Console.WriteLine("Invalid input. Please enter a positive integer.");
+            }
 
+            for (int i = 0; i < numIngredients; i++)
+            {
+                Console.Write("Enter ingredient name: ");
+                string name = Console.ReadLine();
+
+                double quantity;
+                while (true)
+                {
+                    Console.Write("Enter quantity: ");
+                    if (double.TryParse(Console.ReadLine(), out quantity) && quantity > 0)
+                        break;
+                    Console.WriteLine("Invalid input. Please enter a positive number.");
+                }
+
+                Console.Write("Enter unit of measurement: ");
+                string unit = Console.ReadLine();
+
+                ingredients.Add(new Ingredient(name, quantity, unit)); // Corrected naming
+            }
+        }
+
+        public void EnterSteps()
+        {
+            int numSteps;
+            while (true)
+            {
+                Console.Write("Enter the number of steps: ");
+                if (int.TryParse(Console.ReadLine(), out numSteps) && numSteps > 0)
+                    break;
+                Console.WriteLine("Invalid input. Please enter a positive integer.");
+            }
+
+            for (int i = 0; i < numSteps; i++)
+            {
+                Console.Write("Enter step description: ");
+                string step = Console.ReadLine();
+                steps.Add(step);
+            }
+        }
+
+        public void DisplayRecipe() // Corrected method name
+        {
+            if (ingredients.Count == 0 || steps.Count == 0)
+            {
+                Console.WriteLine("No recipe data available.");
+                return;
+            }
+
+            Console.WriteLine("Recipe:");
+
+            Console.WriteLine("\nIngredients:");
+            foreach (Ingredient ingredient in ingredients)
+            {
+                double adjustedQuantity = isScaled ? ingredient.Quantity * scaleFactor : ingredient.Quantity;
+                Console.WriteLine($"{adjustedQuantity} {ingredient.Unit} of {ingredient.Name}");
+            }
+
+            Console.WriteLine("\nSteps:");
+            for (int i = 0; i < steps.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {steps[i]}");
+            }
+        }
     }
 }
