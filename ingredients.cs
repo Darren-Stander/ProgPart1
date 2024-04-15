@@ -107,5 +107,18 @@ namespace ProgPart1
                 Console.WriteLine($"{i + 1}. {steps[i]}");
             }
         }
+
+        public void ScaleRecipe()
+        {
+            double factor;
+            while (true)
+            {
+                Console.Write("Enter the scale factor(0.5, 2 0r 3): ");
+                if (double.TryParse(Console.ReadLine(), out factor) && (factor == 2 || factor == 3))
+                {
+
+                }
+            }
+        }
     }
 }
