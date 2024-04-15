@@ -116,9 +116,18 @@ namespace ProgPart1
                 Console.Write("Enter the scale factor(0.5, 2 0r 3): ");
                 if (double.TryParse(Console.ReadLine(), out factor) && (factor == 2 || factor == 3))
                 {
+                    isScaled = true;
+                    scaleFactor = factor;
+                    Console.WriteLine("Recipe was successfully scaled");
+                    return;
 
                 }
+                Console.WriteLine(" You can only scale by 0.5, 2 or 3 ");
             }
+        }
+        public void ResetRecipe()
+        {
+
         }
     }
 }
