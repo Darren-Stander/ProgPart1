@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace ProgPart1
 {
+
     internal class Ingredient // Changed class name to singular and corrected casing
     {
         public string Name { get; set; }
