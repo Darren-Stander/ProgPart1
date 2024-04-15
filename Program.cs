@@ -10,15 +10,17 @@ namespace ProgPart1
 {
     internal class Program
     {
-        static void Main(string[] args)
+        static void Main(string[] args)     // Start of our application
         {
-            bool close = false;
-            Recipe recipe = new Recipe();
-            Console.Write("Welcome to our app!");
+            bool close = false;             // A boolean variable to control the application loop
+
+            Recipe recipe = new Recipe();       //Created a new instance of the recipe class
+
+            Console.Write("Welcome to our app!");       // Shows a welcome message and prompts the user to enter ingredients and steps for the recipe
             recipe.EnterIngredients();
             recipe.EnterSteps();
 
-            while (!close)
+            while (!close)                              // Main application loop to display the menu and handle user choices
             { 
                 Console.WriteLine("\nWonderful recipe! It sounds absolutely delicious. Feel free to use the menu below.");
                 Console.WriteLine("a. View Recipe");
@@ -27,41 +29,41 @@ namespace ProgPart1
                 Console.WriteLine("d. Delete Recipe");
                 Console.WriteLine("e. Close App");
 
-                string choice = Console.ReadLine().ToLower(); 
+                string choice = Console.ReadLine().ToLower();       // Read the user's choice
 
-                switch (choice) 
+                switch (choice)         // Use the user's choice using a switch statement.
                 {
                     case "a":
-                        recipe.DisplayRecipe(); 
+                        recipe.DisplayRecipe(); //Displays the current recipe details
                         break;
 
                     case "b":
-                        recipe.ScaleRecipe(); // Assuming you will implement this method in Recipe class
+                        recipe.ScaleRecipe(); // Scale the recipe by a specified
                         break;
 
                     case "c":
-                        recipe.ResetRecipe(); // Assuming you will implement this method in Recipe class
+                        recipe.ResetRecipe(); // Reset any scaling adjustments made to the recipe
                         break;
 
                     case "d":
-                        recipe.DeleteRecipe(); // Assuming you will implement this method in Recipe class
+                        recipe.DeleteRecipe(); // Deletes the current recipe
                         break;
 
                     case "e":
-                        close = true;
+                        close = true;       // Shuts down the application
                         break;
 
                     default:
-                        Console.WriteLine("Invalid selection");
+                        Console.WriteLine("Invalid selection");         // Gives an error message when the user gives an invalid letter
                         continue;
                 }
 
-                if (!close)
+                if (!close)         // Confirms if the user wants to continue using the application
                 {
                     Console.WriteLine("\nWould you like to go back to the menu? (yes/no): ");
                     string continueClose = Console.ReadLine().ToLower(); 
                     if (continueClose != "yes")
-                        close = true;
+                        close = true; break;            // If it meets the condition the application will close
                 }
             }
         }
