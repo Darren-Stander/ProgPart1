@@ -4,19 +4,7 @@ using System.Collections.Generic;
 namespace ProgPart1
 {
 
-    internal class Ingredient // Changed class name to singular and corrected casing
-    {
-        public string Name { get; set; }
-        public double Quantity { get; set; }
-        public string Unit { get; set; }
-
-        public Ingredient(string name, double quantity, string unit) // Constructor
-        {
-            Name = name;
-            Quantity = quantity;
-            Unit = unit;
-        }
-    }
+    
 
     internal class Recipe
     {
@@ -132,9 +120,15 @@ namespace ProgPart1
             Console.WriteLine("Successfully reset the measurements to it's original value");
         }
 
-        public void ClearRecipe()
+        public void DeleteRecipe()
         {
-
+            ingredients.Clear();
+            steps.Clear();
+            isScaled = false;
+            scaleFactor = 1.0;
+            Console.WriteLine("Recipe has been cleared. Feel free to add a new recipe.");
+            EnterIngredients();
+            EnterSteps();
         }
     }
 }
