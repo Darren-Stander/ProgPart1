@@ -127,6 +127,13 @@ namespace ProgPart1
         }
         public void ResetRecipe()
         {
+            isScaled = false;
+            scaleFactor = 1.0;
+            Console.WriteLine("Successfully reset the measurements to it's original value");
+        }
+
+        public void ClearRecipe()
+        {
 
         }
     }
