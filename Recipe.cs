@@ -15,6 +15,9 @@ internal class Recipe
     private bool isScaled;
     private double scaleFactor;
 
+        //********************** Start of Recipe ************//
+
+
     public Recipe()
     {
         ingredients = new List<Ingredient>(); 
@@ -23,7 +26,8 @@ internal class Recipe
         scaleFactor = 1.0;
     }
 
-    public void EnterIngredients()                                                                 // This method allows the user to enter details of ingredients
+        //********************** End of Recipe ************//
+        public void EnterIngredients()                                                                 // This method allows the user to enter details of ingredients
         {
         int numIngredients;
         while (true)                                                                               // Loops until a valid number of ingredients is entered
@@ -81,7 +85,9 @@ internal class Recipe
 
     public void DisplayRecipe()                                                                 // This method displays the recipe details including ingredients and cooking steps
         {
-        if (ingredients.Count == 0 || steps.Count == 0)                                         // Check if there are no ingredients or steps available
+            Console.ForegroundColor = ConsoleColor.Blue;
+
+            if (ingredients.Count == 0 || steps.Count == 0)                                         // Check if there are no ingredients or steps available
             {
             Console.WriteLine("No recipe data available.");
             return;
@@ -97,9 +103,11 @@ internal class Recipe
         Console.WriteLine("\nSteps:");                                                        // Display the list of cooking steps
             for (int i = 0; i < steps.Count; i++)
         {
-            Console.WriteLine($"{i + 1}. {steps[i]}");                                      // Displays each step prefixed with its index number
+            Console.WriteLine($"{i + 1}. {steps[i]}");       // Displays each step prefixed with its index number
             }
-    }
+
+            Console.ResetColor();
+        }
 
     public void ScaleRecipe()                                                           // This method allows the user to scale the recipe by a specified factor
     {
@@ -107,10 +115,10 @@ internal class Recipe
 
         while (true)                                                                    // Loops until a valid scale factor is enterd
         {
-            Console.Write("'\nEnter the scale factor(0.5, 2 0r 3): ");                  // Prompt the user to enter the scale factor
+            Console.Write("'\nEnter the scale factor( 0.5, 2 0r 3): ");                  // Prompt the user to enter the scale factor
 
 
-                if (double.TryParse(Console.ReadLine(), out factor) && (factor == 2 || factor == 3))        // Checks if the parsed value is either 2 or 3 and break the loop if valid
+                if (double.TryParse(Console.ReadLine(), out factor) && (factor == 0.5 || factor == 2 || factor == 3))        // Checks if the parsed value is either 2 or 3 and break the loop if valid
                 {
                 isScaled = true;                                            // Sets the scaling to true and updates the scale factor
                 scaleFactor = factor;
@@ -121,6 +129,7 @@ internal class Recipe
             Console.WriteLine("You can only scale by 0.5, 2 or 3 ");            //If an invalid input is entered,it will display an error message
         }
     }
+
     public void ResetRecipe()                                   // This method resets the recipe measurements back to their original values
         {
         isScaled = false;
@@ -141,7 +150,7 @@ internal class Recipe
 
             Console.WriteLine("\nRecipe cleared. You're welcome to add a new one.");    // A message indicating that the recipe has been cleared
 
-            EnterIngredients();         //THe user to enter new ingredients and steps for a new recipe.
+            EnterIngredients();         //The user to enter new ingredients and steps for a new recipe.
         EnterSteps();
     }
 }

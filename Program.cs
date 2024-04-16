@@ -9,7 +9,10 @@ using System.Threading.Tasks;
 namespace ProgPart1
 {
     internal class Program
-    {
+    {/// <summary>
+     /// https://github.com/Darren-Stander/ProgPart1.git        // Github link
+     /// </summary>
+     /// <param name="args"></param>
         static void Main(string[] args)     // Start of our application
         {
             bool close = false;             // A boolean variable to control the application loop
@@ -63,7 +66,9 @@ namespace ProgPart1
                     Console.WriteLine("\nWould you like to go back to the menu? (yes/no): ");
                     string continueClose = Console.ReadLine().ToLower(); 
                     if (continueClose != "yes")
-                        close = true; break;            // If it meets the condition the application will close
+                        close = true;        // If it meets the condition the application will close
+
+
                 }
             }
         }
