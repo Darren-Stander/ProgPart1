@@ -127,22 +127,58 @@ namespace ProgPart1
         }
 
         // Method to calculate and display total calories for the recipe
+        // Method to calculate and display total calories for the recipe
         private void DisplayTotalCalories()
         {
             try
-            { 
-                int totalCalories = ingredients.Sum(ingredient => ingredient.Calories); // Calculate the total calories by summing the calories of all ingredients
-                Console.WriteLine($"\nTotal Calories: {totalCalories}"); // Print the total calories
+            {
+                int totalCalories = ingredients.Sum(ingredient => ingredient.Calories);
+                Console.WriteLine($"\nTotal Calories: {totalCalories}");
 
-                // Raise the CalorieExceeded event if needed
+                // Display an alert if total calories exceed 300
                 if (totalCalories > 300)
                 {
-                    CalorieExceeded?.Invoke($"Warning: The total calories for the recipe '{Name}' exceed 300."); // Raise the CalorieExceeded event with a warning message
+                    DisplayCalorieAlert(totalCalories);
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"An error occurred while calculating total calories: {ex.Message}"); // Handle any exceptions that occur
+                Console.WriteLine($"An error occurred while calculating total calories: {ex.Message}");
+            }
+        }
+
+        // Method to display an alert when calories exceed 300
+        private void DisplayCalorieAlert(int totalCalories)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine($"Warning: The total calories for the recipe '{Name}' exceed 300.");
+            DisplayCalorieInformation(totalCalories);
+            Console.ResetColor();
+        }
+
+        // Method to display information relevant to the number of calories
+        // Method to display information relevant to the number of calories
+        private void DisplayCalorieInformation(int totalCalories)
+        {
+            Console.WriteLine("Calorie Information:");
+            Console.WriteLine($"Total Calories: {totalCalories}");
+
+            // Recommended daily calorie intake
+            int recommendedDailyCalories = 2000; // Assuming a recommended daily intake of 2000 calories
+            Console.WriteLine($"Recommended Daily Calorie Intake: {recommendedDailyCalories}");
+
+            // Percentage of recommended daily intake
+            double percentageOfRecommendedIntake = (double)totalCalories / recommendedDailyCalories * 100;
+            Console.WriteLine($"Percentage of Recommended Daily Intake: {percentageOfRecommendedIntake:F2}%");
+
+            // Suggestions for reducing calories
+            if (totalCalories > recommendedDailyCalories)
+            {
+                Console.WriteLine("Suggestions for Reducing Calories:");
+                Console.WriteLine("- Use low-calorie ingredients or substitutes");
+                Console.WriteLine("- Reduce portion sizes");
+                Console.WriteLine("- Avoid high-calorie ingredients or condiments");
+                Console.WriteLine("- Increase physical activity");
             }
         }
 
