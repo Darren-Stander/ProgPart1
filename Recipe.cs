@@ -45,7 +45,7 @@ namespace ProgPart1
         }
 
         // Method to enter ingredients for the recipe
-        public void EnterIngredients()
+        public void EnterIngredients() 
         {
             try
             {
