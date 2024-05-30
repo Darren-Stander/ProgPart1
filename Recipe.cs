@@ -172,9 +172,9 @@ namespace ProgPart1
             Console.WriteLine($"Percentage of Recommended Daily Intake: {percentageOfRecommendedIntake:F2}%");
 
             // Suggestions for reducing calories
-            if (totalCalories > recommendedDailyCalories)
+            if (totalCalories < recommendedDailyCalories)
             {
-                Console.WriteLine("Suggestions for Reducing Calories:");
+                Console.WriteLine("Suggestions for Reducing Calories: ");
                 Console.WriteLine("- Use low-calorie ingredients or substitutes");
                 Console.WriteLine("- Reduce portion sizes");
                 Console.WriteLine("- Avoid high-calorie ingredients or condiments");
@@ -188,7 +188,7 @@ namespace ProgPart1
             int totalCalories = ingredients.Sum(ingredient => ingredient.Calories); // Calculate the total calories by summing the calories of all ingredients
             if (totalCalories > 300)
             {
-                CalorieExceeded?.Invoke($"Warning: The total calories of the recipe \"{Name}\" exceed 300!"); // Raise the CalorieExceeded event with a warning message
+                CalorieExceeded?.Invoke($"Warning: The total calories of the recipe \"{Name}\" exceeded 300!"); // Raise the CalorieExceeded event with a warning message
             }
         }
 
