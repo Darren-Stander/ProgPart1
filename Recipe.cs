@@ -130,7 +130,7 @@ namespace ProgPart1
         private void DisplayTotalCalories()
         {
             try
-            {
+            { 
                 int totalCalories = ingredients.Sum(ingredient => ingredient.Calories); // Calculate the total calories by summing the calories of all ingredients
                 Console.WriteLine($"\nTotal Calories: {totalCalories}"); // Print the total calories
 
