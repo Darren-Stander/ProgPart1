@@ -58,7 +58,7 @@ namespace ProgPart1
                         break;
                     case 5:
                         // Ask the user which recipe to reset
-                        recipeManager.DisplayAllRecipes();
+                        recipeManager.DisplayAllRecipes(); 
                         string recipeNameToReset = GetValidStringInput("\nEnter the name of the recipe to reset: ");
 
                         // Find the recipe
@@ -113,4 +113,4 @@ namespace ProgPart1
             }
         }
     }
-}
+}      // End of File
