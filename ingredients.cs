@@ -5,17 +5,23 @@ namespace ProgPart1
 {
 
 
-    internal class Ingredient               // This class represents an ingredient with a name, quantity, and unit of measurement
+    internal class Ingredient
     {
-        public string Name { get; set; }        // Name of the ingredients
-        public double Quantity { get; set; }        // Quantity of ingredients
-        public string Unit { get; set; }            // Unit used for the measurement of ingredients
+        // Properties for ingredient details
+        public string Name { get; set; }
+        public double Quantity { get; set; }
+        public string Unit { get; set; }
+        public int Calories { get; set; }
+        public string FoodGroup { get; set; }
 
-        public Ingredient(string name, double quantity, string unit)        // Constructor to initialize an instance of the Ingredient class with provided values
+        // Constructor to initialize an ingredient object
+        public Ingredient(string name, double quantity, string unit, int calories, string foodGroup)
         {
-            Name = name;        // Name property with name provided
-            Quantity = quantity;    //Quantity property with qauntity provided
-            Unit = unit;        // Unit property with unit provided
+            Name = name;
+            Quantity = quantity;
+            Unit = unit;
+            Calories = calories;
+            FoodGroup = foodGroup;
         }
     }
 }

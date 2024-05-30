@@ -1,159 +1,242 @@
-﻿using ProgPart1;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+
 
 namespace ProgPart1
 {
-internal class Recipe
-{
-    private List<Ingredient> ingredients; 
-    private List<string> steps;
-    private bool isScaled;
-    private double scaleFactor;
-
-        //********************** Start of Recipe ************//
 
 
-    public Recipe()
+
+    internal class Recipe
     {
-        ingredients = new List<Ingredient>(); 
-        steps = new List<string>();
-        isScaled = false;
-        scaleFactor = 1.0;
-    }
+        // Properties for recipe details
+        public string Name { get; set; }
+        private List<Ingredient> ingredients; // List to store ingredients
+        private List<string> steps;          // List to store steps
+        private bool isScaled;            // Flag to indicate if the recipe is scaled
+        private double scaleFactor;          // Factor to scale the recipe by
 
-        //********************** End of Recipe ************//
-        public void EnterIngredients()                                                                 // This method allows the user to enter details of ingredients
+        // Delegate for handling calorie exceeded event
+        public delegate void CaloriesExceededHandler(string message);
+
+        // Event to notify when calories exceed 300
+        public event CaloriesExceededHandler CalorieExceeded;
+
+        // Constructor to initialize a recipe object
+        public Recipe(string name)
         {
-        int numIngredients;
-        while (true)                                                                               // Loops until a valid number of ingredients is entered
-            {
-            Console.Write("\nPlease enter the amount of ingredients: ");                           // Prompt the user to enter the number of ingredients
-
-                if (int.TryParse(Console.ReadLine(), out numIngredients) && numIngredients > 0)    // Check if the parsed value is positive and break the loop if valid
-
-                    break;
-
-            Console.WriteLine("Invalid input. Please enter a positive integer.");                  // If invalid input is entered, display an error message
-
-            }
-
-        for (int i = 0; i < numIngredients; i++)
-        {
-            Console.Write("\nIngredients name: ");
-            string name = Console.ReadLine();
-
-            double quantity;                                                                         // Declare a variable to store the quantity of the ingredient
-                while (true)
-            {
-                Console.Write("Enter quantity: ");                                                   // Prompt the user to enter the quantity
-
-                    if (double.TryParse(Console.ReadLine(), out quantity) && quantity > 0)           // Check if the parsed value is positive and break the loop if valid
-                        break;
-                Console.WriteLine("Input error. Please provide a positive number.");
-            }
-
-            Console.Write("Please indicate the unit of measurement: ");                             // Prompt the user to enter the unit of measurement for the ingredient
-                string unit = Console.ReadLine();
-
-            ingredients.Add(new Ingredient(name, quantity, unit));                                 // Create a new Ingredient object with the entered details and add it to the ingredients list
-            }
-    }
-
-    public void EnterSteps()                                                                     // This method allows the user to enter cooking steps or instructions
-        {
-        int numSteps;
-        while (true)                                                                             // Loop until a valid number of steps is entered
-            {
-            Console.Write("\nProvide the number of instructions: ");                            // Prompt the user to enter the number of steps
-                if (int.TryParse(Console.ReadLine(), out numSteps) && numSteps > 0)
-                break;
-            Console.WriteLine("Invalid input. Please enter a positive integer.");               // If invalid input is entered, display an error message
-            }
-
-        for (int i = 0; i < numSteps; i++)                                                      // Loop to iterate through each step
-            {
-            Console.Write("Steps to follow: ");                                                 // Prompt the user to enter the cooking step or instruction
-                string step = Console.ReadLine();
-            steps.Add(step);                                                                    // Add the entered step to the steps list
-            }
-    }
-
-    public void DisplayRecipe()                                                                 // This method displays the recipe details including ingredients and cooking steps
-        {
-            Console.ForegroundColor = ConsoleColor.Blue;
-
-            if (ingredients.Count == 0 || steps.Count == 0)                                         // Check if there are no ingredients or steps available
-            {
-            Console.WriteLine("No recipe data available.");
-            return;
+            Name = name;
+            ingredients = new List<Ingredient>();
+            steps = new List<string>();
+            isScaled = false;
+            scaleFactor = 1.0;
         }
 
-        Console.WriteLine("\nIngredients:");                                                     // Display the list of ingredients with adjusted quantities if scaling is enabled
-            foreach (Ingredient ingredient in ingredients)
+        // Method to enter ingredients for the recipe
+        public void EnterIngredients()
         {
-            double adjustedQuantity = isScaled ? ingredient.Quantity * scaleFactor : ingredient.Quantity;       // Calculate adjusted quantity if scaling is used
-                Console.WriteLine($"{adjustedQuantity} {ingredient.Unit} of {ingredient.Name}");                // Display the ingredient details with adjusted amount
-            }
+            try
+            {
+                Console.Write("\nPlease enter the number of ingredients: ");
+                int numIngredients = int.Parse(Console.ReadLine());
 
-        Console.WriteLine("\nSteps:");                                                        // Display the list of cooking steps
-            for (int i = 0; i < steps.Count; i++)
-        {
-            Console.WriteLine($"{i + 1}. {steps[i]}");       // Displays each step prefixed with its index number
-            }
-
-            Console.ResetColor();
-        }
-
-    public void ScaleRecipe()                                                           // This method allows the user to scale the recipe by a specified factor
-    {
-        double factor;                                                                 // Declares the variable to store the scale factor
-
-        while (true)                                                                    // Loops until a valid scale factor is enterd
-        {
-            Console.Write("'\nEnter the scale factor( 0.5, 2 0r 3): ");                  // Prompt the user to enter the scale factor
-
-
-                if (double.TryParse(Console.ReadLine(), out factor) && (factor == 0.5 || factor == 2 || factor == 3))        // Checks if the parsed value is either 2 or 3 and break the loop if valid
+                for (int i = 0; i < numIngredients; i++)
                 {
-                isScaled = true;                                            // Sets the scaling to true and updates the scale factor
-                scaleFactor = factor;
-                Console.WriteLine("\nRecipe was successfully scaled");        // Displays a message that indicates the recipe was successfully scaled
-                    return;
+                    Console.Write("\nIngredient name: ");
+                    string name = Console.ReadLine();
 
+                    Console.Write("Enter quantity: ");
+                    double quantity = double.Parse(Console.ReadLine());
+
+                    Console.Write("Please indicate the unit of measurement: ");
+                    string unit = Console.ReadLine();
+
+                    Console.Write("Enter number of calories: ");
+                    int calories = int.Parse(Console.ReadLine());
+
+                    Console.Write("Enter food group: ");
+                    string foodGroup = Console.ReadLine();
+
+                    ingredients.Add(new Ingredient(name, quantity, unit, calories, foodGroup));
+                }
+
+                // Check if total calories exceed 300 and raise event
+                CheckCalories();
             }
-            Console.WriteLine("You can only scale by 0.5, 2 or 3 ");            //If an invalid input is entered,it will display an error message
-        }
-    }
-
-    public void ResetRecipe()                                   // This method resets the recipe measurements back to their original values
-        {
-        isScaled = false;
-        scaleFactor = 1.0;                                      // Resets the scale factor to its original value of 1.0
-
-            Console.WriteLine("\nSuccessfully reset the measurements to their original values.");       // Displays the message indicating that the measurements were successfully reset
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while entering ingredients: {ex.Message}");
+            }
         }
 
-    public void DeleteRecipe()                  // This method deletes the current recipe by clearing all ingredients, steps and resets any scaled adjustments
+        // Method to enter steps for the recipe
+        public void EnterSteps()
         {
-        ingredients.Clear();                    // Clear the list of ingredients
+            try
+            {
+                Console.Write("\nProvide the number of instructions: ");
+                int numSteps = int.Parse(Console.ReadLine());
 
-            steps.Clear();                        // Clear the list of steps
+                for (int i = 0; i < numSteps; i++)
+                {
+                    Console.Write("Step: ");
+                    string step = Console.ReadLine();
+                    steps.Add(step);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while entering steps: {ex.Message}");
+            }
+        }
 
-            isScaled = false;                        // Reset the scaling flag to false
+        // Method to display the recipe details
+        public void DisplayRecipe()
+        {
+            try
+            {
+                Console.ForegroundColor = ConsoleColor.Blue;
 
-            scaleFactor = 1.0;                      // Resets the scale factor to its original value of 1.0
+                if (ingredients.Count == 0 || steps.Count == 0)
+                {
+                    Console.WriteLine("No recipe data available.");
+                    return;
+                }
 
-            Console.WriteLine("\nRecipe cleared. You're welcome to add a new one.");    // A message indicating that the recipe has been cleared
+                Console.WriteLine($"\nRecipe: {Name}");
+                Console.WriteLine("\nIngredients:");
+                foreach (Ingredient ingredient in ingredients)
+                {
+                    double adjustedQuantity = isScaled ? ingredient.Quantity * scaleFactor : ingredient.Quantity;
+                    Console.WriteLine($"{adjustedQuantity} {ingredient.Unit} of {ingredient.Name} - {ingredient.Calories} calories ({ingredient.FoodGroup})");
+                }
 
-            EnterIngredients();         //The user to enter new ingredients and steps for a new recipe.
-        EnterSteps();
+                Console.WriteLine("\nSteps:");
+                for (int i = 0; i < steps.Count; i++)
+                {
+                    Console.WriteLine($"{i + 1}. {steps[i]}");
+                }
+
+                // Display total calories
+                DisplayTotalCalories();
+
+                Console.ResetColor();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while displaying the recipe: {ex.Message}");
+            }
+        }
+
+        // Method to calculate and display total calories for the recipe
+        private void DisplayTotalCalories()
+        {
+            try
+            {
+                int totalCalories = ingredients.Sum(ingredient => ingredient.Calories);
+                Console.WriteLine($"\nTotal Calories: {totalCalories}");
+
+                // Raise the CalorieExceeded event if needed
+                if (totalCalories > 300)
+                {
+                    CalorieExceeded?.Invoke($"Warning: The total calories for the recipe '{Name}' exceed 300.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while calculating total calories: {ex.Message}");
+            }
+        }
+
+        // Method to check if total calories exceed 300
+        private void CheckCalories()
+        {
+            int totalCalories = ingredients.Sum(ingredient => ingredient.Calories);
+            if (totalCalories > 300)
+            {
+                CalorieExceeded?.Invoke($"Warning: The total calories of the recipe \"{Name}\" exceed 300!");
+            }
+        }
+
+        // Method to scale the recipe
+        public void ScaleRecipe()
+        {
+            try
+            {
+                Console.Write("Enter the scale factor (0.5, 2 or 3): ");
+                double factor = double.Parse(Console.ReadLine());
+
+                if (factor == 0.5 || factor == 2 || factor == 3)
+                {
+                    isScaled = true;
+                    scaleFactor = factor;
+
+                    // Scale the ingredient quantities
+                    foreach (Ingredient ingredient in ingredients)
+                    {
+                        if (ingredient.Unit == "teaspoon")
+                        {
+                            ingredient.Quantity *= factor * 3;
+                        }
+                        else if (ingredient.Unit == "tablespoon")
+                        {
+                            ingredient.Quantity *= factor * 3;
+                        }
+                        else if (ingredient.Unit == "cup")
+                        {
+                            if (factor == 0.5)
+                            {
+                                ingredient.Quantity *= 8 * factor;
+                            }
+                            else if (factor == 2)
+                            {
+                                ingredient.Quantity *= 16 * factor;
+                            }
+                            else if (factor == 3)
+                            {
+                                ingredient.Quantity *= 16 * factor;
+                            }
+                        }
+                    }
+                    Console.WriteLine("\nRecipe was successfully scaled.");
+                }
+                else
+                {
+                    Console.WriteLine("You can only scale by 0.5, 2, or 3.");
+                }
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("Invalid input. You can only scale by 0.5, 2, or 3.");
+            }
+        }
+
+        // Method to reset the recipe scaling
+        public void ResetRecipe()
+        {
+            isScaled = false;
+            scaleFactor = 1.0;
+            Console.WriteLine("\nSuccessfully reset the measurements to their original values.");
+        }
+
+        // Method to delete the recipe
+        public void DeleteRecipe()
+        {
+            ingredients.Clear();
+            steps.Clear();
+            isScaled = false;
+            scaleFactor = 1.0;
+            Console.WriteLine("\nRecipe cleared. You're welcome to add a new one.");
+        }
     }
 }
-}
+
+
+
+
+
+
+
 
 //----------------------------------------EndOfFile------------------------------------------//

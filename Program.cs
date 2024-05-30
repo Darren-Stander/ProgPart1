@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net.Mail;
-using System.Text;
-using System.Threading.Tasks;
+
 
 
 namespace ProgPart1
@@ -13,64 +10,82 @@ namespace ProgPart1
      /// https://github.com/Darren-Stander/ProgPart1.git        // Github link
      /// </summary>
      /// <param name="args"></param>
-        static void Main(string[] args)     // Start of our application
+        static void Main(string[] args)
         {
-            bool close = false;             // A boolean variable to control the application loop
+            RecipeManager recipeManager = new RecipeManager();
 
-            Recipe recipe = new Recipe();       //Created a new instance of the recipe class
+            // Main program loop to interact with the user
+            while (true)
+            {
+                Console.WriteLine("\nChoose an action:");
+                Console.WriteLine("1. Add Recipe");
+                Console.WriteLine("2. Display All Recipes");
+                Console.WriteLine("3. Display Recipe Details");
+                Console.WriteLine("4. Scale Recipe"); // New option
+                Console.WriteLine("5. Reset Recipe"); // New option
+                Console.WriteLine("6. Exit");
 
-            Console.Write("Welcome to our app!");       // Shows a welcome message and prompts the user to enter ingredients and steps for the recipe
-            recipe.EnterIngredients();
-            recipe.EnterSteps();
+                Console.Write("\nEnter your choice: ");
+                int choice = int.Parse(Console.ReadLine());
 
-            while (!close)                              // Main application loop to display the menu and handle user choices
-            { 
-                Console.WriteLine("\nWonderful recipe! It sounds absolutely delicious. Feel free to use the menu below.");
-                Console.WriteLine("a. View Recipe");
-                Console.WriteLine("b. Scale Recipe");
-                Console.WriteLine("c. Reset Scale");
-                Console.WriteLine("d. Delete Recipe");
-                Console.WriteLine("e. Close App");
-
-                string choice = Console.ReadLine().ToLower();       // Read the user's choice
-
-                switch (choice)         // Use the user's choice using a switch statement.
+                switch (choice)
                 {
-                    case "a":
-                        recipe.DisplayRecipe(); //Displays the current recipe details
+                    case 1:
+                        recipeManager.AddRecipe();
                         break;
-
-                    case "b":
-                        recipe.ScaleRecipe(); // Scale the recipe by a specified
+                    case 2:
+                        recipeManager.DisplayAllRecipes();
                         break;
-
-                    case "c":
-                        recipe.ResetRecipe(); // Reset any scaling adjustments made to the recipe
+                    case 3:
+                        recipeManager.DisplayRecipeDetails();
                         break;
+                    case 4:
+                        // Ask the user which recipe to scale
+                        recipeManager.DisplayAllRecipes();
+                        Console.Write("\nEnter the name of the recipe to scale: ");
+                        string recipeNameToScale = Console.ReadLine();
 
-                    case "d":
-                        recipe.DeleteRecipe(); // Deletes the current recipe
+                        // Find the recipe
+                        Recipe recipeToScale = recipeManager.recipes.FirstOrDefault(r => r.Name.Equals(recipeNameToScale, StringComparison.OrdinalIgnoreCase));
+
+                        // Scale the recipe if found
+                        if (recipeToScale != null)
+                        {
+                            recipeToScale.ScaleRecipe();
+                        }
+                        else
+                        {
+                            Console.WriteLine("Recipe not found.");
+                        }
                         break;
+                    case 5:
+                        // Ask the user which recipe to reset
+                        recipeManager.DisplayAllRecipes();
+                        Console.Write("\nEnter the name of the recipe to reset: ");
+                        string recipeNameToReset = Console.ReadLine();
 
-                    case "e":
-                        close = true;       // Shuts down the application
+                        // Find the recipe
+                        Recipe recipeToReset = recipeManager.recipes.FirstOrDefault(r => r.Name.Equals(recipeNameToReset, StringComparison.OrdinalIgnoreCase));
+
+                        // Reset the recipe if found
+                        if (recipeToReset != null)
+                        {
+                            recipeToReset.ResetRecipe();
+                        }
+                        else
+                        {
+                            Console.WriteLine("Recipe not found.");
+                        }
                         break;
-
+                    case 6:
+                        Console.WriteLine("Exiting...");
+                        return;
                     default:
-                        Console.WriteLine("Invalid selection");         // Gives an error message when the user gives an invalid letter
-                        continue;
-                }
-
-                if (!close)         // Confirms if the user wants to continue using the application
-                {
-                    Console.WriteLine("\nWould you like to go back to the menu? (yes/no): ");
-                    string continueClose = Console.ReadLine().ToLower(); 
-                    if (continueClose != "yes")
-                        close = true;        // If it meets the condition the application will close
-
-
+                        Console.WriteLine("Invalid choice. Please try again.");
+                        break;
                 }
             }
         }
     }
 }
+
