@@ -18,14 +18,15 @@ namespace ProgPart1
             {
                 Console.WriteLine("\nChoose an action:");
                 Console.WriteLine("1. Add Recipe");
-                Console.WriteLine("2. Display All Recipes");// New option
-                Console.WriteLine("3. Display Recipe Details");// New option
-                Console.WriteLine("4. Scale Recipe"); 
-                Console.WriteLine("5. Reset Recipe"); 
+                Console.WriteLine("2. Display All Recipes");
+                Console.WriteLine("3. Display Recipe Details");
+                Console.WriteLine("4. Scale Recipe");
+                Console.WriteLine("5. Reset Recipe");
                 Console.WriteLine("6. Exit");
-                Console.Write("\nEnter your choice: ");
-                int choice = int.Parse(Console.ReadLine()); // Get the user's choice
 
+                int choice = GetValidIntInput("\nEnter your choice: ");
+
+                // Now, execute the switch statement based on the valid choice
                 switch (choice)
                 {
                     case 1:
@@ -40,8 +41,7 @@ namespace ProgPart1
                     case 4:
                         // Ask the user which recipe to scale
                         recipeManager.DisplayAllRecipes();
-                        Console.Write("\nEnter the name of the recipe to scale: ");
-                        string recipeNameToScale = Console.ReadLine();
+                        string recipeNameToScale = GetValidStringInput("\nEnter the name of the recipe to scale: ");
 
                         // Find the recipe
                         Recipe recipeToScale = recipeManager.recipes.FirstOrDefault(r => r.Name.Equals(recipeNameToScale, StringComparison.OrdinalIgnoreCase));
@@ -59,8 +59,7 @@ namespace ProgPart1
                     case 5:
                         // Ask the user which recipe to reset
                         recipeManager.DisplayAllRecipes();
-                        Console.Write("\nEnter the name of the recipe to reset: ");
-                        string recipeNameToReset = Console.ReadLine();
+                        string recipeNameToReset = GetValidStringInput("\nEnter the name of the recipe to reset: ");
 
                         // Find the recipe
                         Recipe recipeToReset = recipeManager.recipes.FirstOrDefault(r => r.Name.Equals(recipeNameToReset, StringComparison.OrdinalIgnoreCase));
@@ -82,6 +81,35 @@ namespace ProgPart1
                         Console.WriteLine("Invalid choice. Please try again."); // Display an error message for an invalid choice
                         break;
                 }
+            }
+        }
+
+        // Method to get valid string input
+        private static string GetValidStringInput(string prompt)
+        {
+            while (true)
+            {
+                Console.Write(prompt);
+                string input = Console.ReadLine();
+                if (!string.IsNullOrWhiteSpace(input) && input.All(char.IsLetter))
+                {
+                    return input;
+                }
+                Console.WriteLine("Invalid input. Please enter a valid string.");
+            }
+        }
+
+        // Method to get valid integer input
+        private static int GetValidIntInput(string prompt)
+        {
+            while (true)
+            {
+                Console.Write(prompt);
+                if (int.TryParse(Console.ReadLine(), out int result))
+                {
+                    return result;
+                }
+                Console.WriteLine("Invalid input. Please enter a valid integer.");
             }
         }
     }
