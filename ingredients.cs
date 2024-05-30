@@ -6,7 +6,7 @@ namespace ProgPart1
 
 
     internal class Ingredient
-    {
+    { 
         // Properties for ingredient details
         public string Name { get; set; }
         public double Quantity { get; set; }
