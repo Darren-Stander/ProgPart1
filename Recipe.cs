@@ -262,6 +262,6 @@ namespace ProgPart1
             Console.WriteLine("\nRecipe cleared. You're welcome to add a new one."); // Print a message indicating that the recipe has been cleared
         }
     }
-}
+} 
 
 //----------------------------------------EndOfFile------------------------------------------//
