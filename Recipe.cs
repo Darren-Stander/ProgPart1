@@ -44,14 +44,23 @@ namespace ProgPart1
             }
         }
 
-
-
         // Method to enter ingredients for the recipe
         public void EnterIngredients()
         {
             try
             {
                 int numIngredients = GetValidIntInput("\nPlease enter the number of ingredients: ");
+
+                // Add explanation of food groups here
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("\nExplanations");
+                Console.WriteLine("Grains - This group includes foods made from wheat, rice, oats, cornmeal, barley, or another cereal grain.");
+                Console.WriteLine("Vegetables - This group includes fresh, frozen, canned, and dried vegetables.");
+                Console.WriteLine("Fruits - This group includes fresh, frozen, canned, and dried fruits.");
+                Console.WriteLine("Dairy - This group includes milk, yogurt, cheese, and fortified soy beverages.");
+                Console.WriteLine("Protein - This group includes meat, poultry, seafood, beans, peas, eggs, processed soy products, nuts, and seeds.");
+                Console.ResetColor();
+                Console.Write("\nEnter the number of the food group: ");
 
                 for (int i = 0; i < numIngredients; i++)
                 {
@@ -267,7 +276,6 @@ namespace ProgPart1
                 Console.WriteLine("Invalid input. You can only scale by 0.5, 2, or 3.");
             }
         }
-
         // Method to reset the recipe scaling
         public void ResetRecipe()
         {
@@ -287,3 +295,4 @@ namespace ProgPart1
         }
     }
 }
+
